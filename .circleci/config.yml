@@ -11,8 +11,13 @@ orbs:
 
 commands:
   sayhello:
+    description: "say hello"
+    parameters:
+      to:
+        type: string
+        default: "World"
     steps:
-      - run: echo "hello world(command)"
+      - run: echo "Hello <<parameters.to>>"
 
 jobs:
   build:
@@ -20,3 +25,4 @@ jobs:
       - image: cimg/node:lts
     steps:
       - sayhello
+        to: Everyone
