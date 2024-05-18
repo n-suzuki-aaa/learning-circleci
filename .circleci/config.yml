@@ -46,7 +46,6 @@ workflows:
             branches:
               only:
                 - main
-      - push
     jobs:
       - install_deps
       - test_a:
