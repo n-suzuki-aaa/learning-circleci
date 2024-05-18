@@ -38,7 +38,7 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
+  build-workflow:
     jobs:
       - install_deps
       - test_a:
