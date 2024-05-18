@@ -5,6 +5,15 @@ executors:
       - image: cimg/ruby:2.7.1-node
     environment:
       BUDLE_PATH: vendor/bundle
+
+orbs:
+  win: circleci/windows@2.4.0
+
+commands:
+  say_hello:
+    steps:
+      - run: echo "hello world(command)"
+
 jobs:
   build:
     docker:
@@ -14,3 +23,12 @@ jobs:
       RAILS_ENV: production
     steps:
       - run: echo "hello world"
+  windows_build:
+    executor: win/default
+    steps:
+      - run: echo "hello world(windows)"
+  commands_build:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - say_hello
