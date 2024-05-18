@@ -6,4 +6,4 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: TZ='Asia/Tokyo' yarn test
+      - run: yarn test
