@@ -31,6 +31,10 @@ jobs:
     executor: default
     steps:
       - run: echo "deploy to stage"
+  deploy-prd:
+    executor: default
+    steps:
+      - run: echo "deploy to production"
 
 workflows:
   version: 2
@@ -52,5 +56,12 @@ workflows:
             branches:
               only:
                 - /^stage-.*/
+          requires:
+            - deploy
+      - deploy-prd:
+          filters:
+            branches:
+              only:
+                - main
           requires:
             - deploy
