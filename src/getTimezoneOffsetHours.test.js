@@ -1,5 +1,5 @@
-const getTimeZoneOffsetHours = require('./getTimeZoneOffsetHours');
+const getTimezoneOffsetHours = require('./getTimezoneOffsetHours');
 
-test('getTimeZoneOffsetHours returns -9', () => {
-  expect(getTimeZoneOffsetHours()).toBe(-9);
+test('getTimezoneOffsetHours returns -9', () => {
+  expect(getTimezoneOffsetHours()).toBe(-9);
 })
