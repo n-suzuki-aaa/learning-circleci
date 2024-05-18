@@ -38,7 +38,7 @@ jobs:
 
 workflows:
   version: 2
-  test-workflow:
+  test-and-deploy-workflow:
     jobs:
       - install_deps
       - test_a:
@@ -47,6 +47,14 @@ workflows:
       - test_b:
           requires:
             - install_deps
+      - hold:
+          type: approval
+          requires:
+            - test_a
+            - test_b
+      - deploy:
+          requires:
+            - hold
   build-workflow:
     triggers:
       - schedule:
