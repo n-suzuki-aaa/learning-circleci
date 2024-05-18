@@ -3,7 +3,10 @@ jobs:
   build:
     docker:
       - image: cimg/node:lts
+      - image: cimg/base:2022.09
     steps:
+      - add_ssh_keys:
+        - "SHA256:9Jfq80zW6ZdoSWOZm3VSAU4h2F0jUT+S4+OLPH8QkNw"
       - checkout
       - run: yarn install
       - run: yarn test
