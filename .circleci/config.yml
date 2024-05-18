@@ -25,4 +25,4 @@ jobs:
       - image: cimg/node:lts
     steps:
       - sayhello:
-        to: "Everyone"
+          to: "Everyone"
