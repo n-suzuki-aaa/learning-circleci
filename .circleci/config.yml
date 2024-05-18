@@ -1,12 +1,21 @@
 version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/node:lts
+
 jobs:
   install_deps:
+    executor: default
     steps:
       - run: echo "install_deps"
   test_a:
+    executor: default
     steps:
       - run: echo "test_a"
   test_b:
+    executor: default
     steps:
       - run: echo "test_b"
 
