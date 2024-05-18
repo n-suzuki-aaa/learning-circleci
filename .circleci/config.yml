@@ -10,7 +10,7 @@ orbs:
   win: circleci/windows@2.4.0
 
 commands:
-  say_hello:
+  sayhello:
     steps:
       - run: echo "hello world(command)"
 
@@ -31,4 +31,4 @@ jobs:
     docker:
       - image: cimg/node:lts
     steps:
-      - say_hello
+      - sayhello
