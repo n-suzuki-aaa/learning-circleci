@@ -1,19 +1,16 @@
 version: 2.1
+executors:
+  my-executor:
+    docker:
+      - image: cimg/ruby:2.7.1-node
+      environment:
+        BUDLE_PATH: vendor/bundle
 jobs:
   build:
     docker:
-      - image: cimg/node:lts
-      # - image: cimg/base:2022.09
+      - image: cimg/ruby:2.7.1
+    executor: my-executor
+    environment:
+      RAILS_ENV: production
     steps:
-      - checkout
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - "SHA256:9Jfq80zW6ZdoSWOZm3VSAU4h2F0jUT+S4+OLPH8QkNw"
-      - run: yarn install
-      - run: yarn test
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - build
+      - run: echo "hello world"
