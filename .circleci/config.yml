@@ -1,3 +1,17 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/node:lts
+      # - image: cimg/base:2022.09
+    steps:
+      - checkout
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "SHA256:9Jfq80zW6ZdoSWOZm3VSAU4h2F0jUT+S4+OLPH8QkNw"
+      - run: yarn install
+      - run: yarn test
+
 workflows:
   version: 2
   workflow:
