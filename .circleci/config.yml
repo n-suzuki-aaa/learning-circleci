@@ -38,6 +38,15 @@ jobs:
 
 workflows:
   version: 2
+  test-workflow:
+    jobs:
+      - install_deps
+      - test_a:
+          requires:
+            - install_deps
+      - test_b:
+          requires:
+            - install_deps
   build-workflow:
     triggers:
       - schedule:
