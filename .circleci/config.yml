@@ -3,8 +3,8 @@ executors:
   my-executor:
     docker:
       - image: cimg/ruby:2.7.1-node
-      environment:
-        BUDLE_PATH: vendor/bundle
+    environment:
+      BUDLE_PATH: vendor/bundle
 jobs:
   build:
     docker:
