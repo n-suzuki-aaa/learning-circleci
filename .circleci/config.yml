@@ -29,12 +29,8 @@ jobs:
       - run: echo "deploy"
   deploy-stg:
     executor: default
-    filters:
-      branches:
-        only:
-          - /^stage-.*/
     steps:
-      - run: echo "deploy"
+      - run: echo "deploy to stage"
 
 workflows:
   version: 2
@@ -52,5 +48,9 @@ workflows:
             - test_a
             - test_b
       - deploy-stg:
+          filters:
+            branches:
+              only:
+                - /^stage-.*/
           requires:
             - deploy
