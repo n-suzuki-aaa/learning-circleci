@@ -17,18 +17,6 @@ commands:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.1
-    executor: my-executor
-    environment:
-      RAILS_ENV: production
-    steps:
-      - run: echo "hello world"
-  windows_build:
-    executor: win/default
-    steps:
-      - run: echo "hello world(windows)"
-  commands_build:
-    docker:
       - image: cimg/node:lts
     steps:
       - sayhello
