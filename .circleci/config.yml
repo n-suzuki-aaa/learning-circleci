@@ -1,28 +1,23 @@
-version: 2.1
-executors:
-  my-executor:
-    docker:
-      - image: cimg/ruby:2.7.1-node
-    environment:
-      BUDLE_PATH: vendor/bundle
-
-orbs:
-  win: circleci/windows@2.4.0
-
-commands:
-  sayhello:
-    description: "say hello"
-    parameters:
-      to:
-        type: string
-        default: "World"
-    steps:
-      - run: echo "Hello <<parameters.to>>"
-
+version: 2
 jobs:
-  build:
-    docker:
-      - image: cimg/node:lts
+  install_deps:
     steps:
-      - sayhello:
-          to: "Everyone"
+      - run: echo "install_deps"
+  test_a:
+    steps:
+      - run: echo "test_a"
+  test_b:
+    steps:
+      - run: echo "test_b"
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - install_deps
+      - test_a:
+          requires:
+            - install_deps
+      - test_b:
+          requires:
+            - install_deps
