@@ -16,14 +16,17 @@ jobs:
     steps:
       - run:
           name: Check ENV
+          environment:
+            NODE_ENV: production
           command: |
             echo "CI is '$CI'"
             echo "CIRCLE_SHA1 is '$CIRCLE_SHA1'"
             echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
+            echo "NODE_ENV is '$NODE_ENV'"
   test_a:
     executor: default
     steps:
-      - run: echo "test_a"
+      - run: echo "test_a(NODE_ENV is '$NODE_ENV')"
   test_b:
     executor: default
     steps:
