@@ -14,7 +14,12 @@ jobs:
   install_deps:
     executor: default
     steps:
-      - run: echo "install_deps"
+      - run:
+          name: Check ENV
+          command: |
+            echo "CI is '$CI'"
+            echo "CIRCLE_SHA1 is '$CIRCLE_SHA1'"
+            echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
   test_a:
     executor: default
     steps:
