@@ -50,7 +50,7 @@ workflows:
   test-and-deploy-workflow:
     jobs:
       - install_deps:
-        context: SLACK_INTEGRATION
+          context: SLACK_INTEGRATION
       - test_a:
           requires:
             - install_deps
