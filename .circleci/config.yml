@@ -10,6 +10,15 @@ orbs:
   pr-comment: benjlevesque/pr-comment@0.1.9
 
 jobs:
+  deploy_key_test:
+    executor: default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "<3072 SHA256:bfF7ytx/ehJba6ykmaxv8UP1c1sxs10KFaSHF4MCSj4 circleci-key-pair (RSA)>"
+      - run:
+          command: git push origin main
   pull_request_comment_test:
     docker:
       - image: circleci/python:2.7
