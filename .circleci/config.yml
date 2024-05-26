@@ -24,6 +24,23 @@ jobs:
             echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
             echo "NODE_ENV is '$NODE_ENV'"
             echo "SLACK_WEBHOOK is '$SLACK_WEBHOOK'"
+  env_var_test:
+    executor: default
+    steps:
+      - run:
+          name: Check ENV
+          environment:
+            STEP_VARIABLE: "This is step variable"
+          command: |
+            echo $STEP_VARIABLE
+      - run:
+          name: Check Context
+          command: |
+            echo $CONTEXT_VARIABLE
+      - run:
+          name: Check Base64
+          command: |
+            echo $BASE64_PROJECT_VARIABLE | base64 --decode
   test_a:
     executor: default
     steps:
@@ -51,6 +68,8 @@ workflows:
     jobs:
       - install_deps:
           context: SLACK_INTEGRATION
+      - env_var_test:
+          context: EXAMPLE_CONTEXT
       - test_a:
           requires:
             - install_deps
