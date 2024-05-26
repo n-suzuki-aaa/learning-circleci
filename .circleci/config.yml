@@ -110,6 +110,8 @@ workflows:
             - hold
       - notify:
           context: SLACK_INTEGRATION
+          requires:
+            - deploy
 
   build-workflow:
     triggers:
