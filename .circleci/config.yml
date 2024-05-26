@@ -9,6 +9,27 @@ orbs:
   slack: circleci/slack@4.13.3
 
 jobs:
+  notify:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
   install-certificates:
     executor: default
     steps:
@@ -87,6 +108,9 @@ workflows:
       - deploy:
           requires:
             - hold
+      - notify:
+          context: SLACK_INTEGRATION
+
   build-workflow:
     triggers:
       - schedule:
