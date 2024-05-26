@@ -14,23 +14,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "デプロイ失敗",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
-          when: on_fail
+          message: "デプロイ成功"
+          when: on_success
   install-certificates:
     executor: default
     steps:
