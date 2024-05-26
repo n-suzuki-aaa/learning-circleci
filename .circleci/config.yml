@@ -5,6 +5,9 @@ executors:
     docker:
       - image: circleci/node:lts
 
+orbs:
+  slack: circleci/slack@4.13.3
+
 jobs:
   install-certificates:
     executor: default
