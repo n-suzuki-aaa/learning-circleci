@@ -13,6 +13,8 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - slack/status:
+          fail_only: true
       - slack/notify:
           custom: |
             {
@@ -22,7 +24,7 @@ jobs:
                   "fields": [
                     {
                       "type": "plain_text",
-                      "text": "*This is a text notification*",
+                      "text": "デプロイ失敗",
                       "emoji": true
                     }
                   ]
