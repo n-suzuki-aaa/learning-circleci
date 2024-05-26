@@ -13,8 +13,6 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - slack/status:
-          fail_only: true
       - slack/notify:
           custom: |
             {
@@ -32,6 +30,7 @@ jobs:
               ]
             }
           event: always
+          when: on_fail
   install-certificates:
     executor: default
     steps:
