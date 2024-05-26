@@ -23,6 +23,7 @@ jobs:
             echo "CIRCLE_SHA1 is '$CIRCLE_SHA1'"
             echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
             echo "NODE_ENV is '$NODE_ENV'"
+            echo "SLACK_INTEGRATION is '$SLACK_INTEGRATION'"
   test_a:
     executor: default
     steps:
