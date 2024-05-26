@@ -30,7 +30,7 @@ jobs:
   test_b:
     executor: default
     steps:
-      - run: echo "test_b(EXAMPLE_VARIABLE is $'EXAMPLE_VARIABLE')"
+      - run: echo "test_b(EXAMPLE_VARIABLE is '$EXAMPLE_VARIABLE')"
   deploy:
     executor: default
     steps:
