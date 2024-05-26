@@ -7,8 +7,18 @@ executors:
 
 orbs:
   slack: circleci/slack@4.13.3
+  pr-comment: benjlevesque/pr-comment@0.1.9
 
 jobs:
+  pull_request_comment_test:
+    executor: default
+    steps:
+      - checkout
+      - pr-comment/pr-comment:
+          comment: |
+            Githubプルリクエストにコメント
+            ${CIRCLE_BUILD_URL}
+          maxComments: 10
   notify:
     docker:
       - image: cimg/base:stable
@@ -90,6 +100,7 @@ workflows:
   version: 2
   test-and-deploy-workflow:
     jobs:
+      - pull_request_comment_test:
       - install_deps:
           context: SLACK_INTEGRATION
       - env_var_test:
