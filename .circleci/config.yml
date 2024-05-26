@@ -49,7 +49,7 @@ workflows:
   version: 2
   test-and-deploy-workflow:
     jobs:
-      - install_deps
+      - install_deps:
         context: SLACK_INTEGRATION
       - test_a:
           requires:
