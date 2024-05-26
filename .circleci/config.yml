@@ -111,6 +111,7 @@ workflows:
   test-and-deploy-workflow:
     jobs:
       # - pull_request_comment_test
+      - deploy_key_test
       - install_deps:
           context: SLACK_INTEGRATION
       - env_var_test:
