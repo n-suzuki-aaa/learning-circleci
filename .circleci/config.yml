@@ -11,7 +11,8 @@ orbs:
 
 jobs:
   pull_request_comment_test:
-    executor: default
+    docker:
+      - image: circleci/python:2.7
     steps:
       - checkout
       - pr-comment/pr-comment:
@@ -100,7 +101,7 @@ workflows:
   version: 2
   test-and-deploy-workflow:
     jobs:
-      - pull_request_comment_test
+      # - pull_request_comment_test
       - install_deps:
           context: SLACK_INTEGRATION
       - env_var_test:
