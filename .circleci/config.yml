@@ -1,171 +1,37 @@
-version: 2.1
-
 executors:
   default:
     docker:
       - image: circleci/node:lts
+    working_directory: ~/repo
 
-orbs:
-  slack: circleci/slack@4.13.3
-  pr-comment: benjlevesque/pr-comment@0.1.9
-
+version: 2.1
 jobs:
-  deploy_key_test:
+  setup:
     executor: default
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "<3072 SHA256:bfF7ytx/ehJba6ykmaxv8UP1c1sxs10KFaSHF4MCSj4 circleci-key-pair (RSA)>"
       - run:
-          command: git push origin main
-  pull_request_comment_test:
-    docker:
-      - image: circleci/python:2.7
-    steps:
-      - checkout
-      - pr-comment/pr-comment:
-          comment: |
-            Githubプルリクエストにコメント
-            ${CIRCLE_BUILD_URL}
-          maxComments: 10
-  notify:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "デプロイ失敗",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: fail
-  install-certificates:
+          name: Install node modules
+          command: yarn install
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - node_modules
+  test_jest:
     executor: default
     steps:
       - checkout
-      - run: apt-get update; apt-get install -y ca-certificates
-  install_deps:
-    executor: default
-    steps:
+      - attach_workspace:
+          at: .
       - run:
-          name: Check ENV
-          environment:
-            NODE_ENV: production
-          command: |
-            echo "CI is '$CI'"
-            echo "CIRCLE_SHA1 is '$CIRCLE_SHA1'"
-            echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
-            echo "NODE_ENV is '$NODE_ENV'"
-            echo "SLACK_WEBHOOK is '$SLACK_WEBHOOK'"
-  env_var_test:
-    executor: default
-    steps:
-      - run:
-          name: Check ENV
-          environment:
-            STEP_VARIABLE: "This is step variable"
-          command: |
-            echo $STEP_VARIABLE
-      - run:
-          name: Check Context
-          command: |
-            echo $CONTEXT_VARIABLE
-      - run:
-          name: Check Base64
-          command: |
-            echo $BASE64_PROJECT_VARIABLE | base64 --decode
-  test_a:
-    executor: default
-    steps:
-      - run: echo "test_a(NODE_ENV is '$NODE_ENV')"
-  test_b:
-    executor: default
-    steps:
-      - run: echo "test_b(EXAMPLE_VARIABLE is '$EXAMPLE_VARIABLE')"
-  deploy:
-    executor: default
-    steps:
-      - run: echo "deploy"
-  deploy-stg:
-    executor: default
-    steps:
-      - run: echo "deploy to stage"
-  deploy-prd:
-    executor: default
-    steps:
-      - run: echo "deploy to production"
+          name: Run Jest tests
+          command: npx jest --ci --maxWorkers=2
 
 workflows:
   version: 2
-  test-and-deploy-workflow:
+  build_test:
     jobs:
-      # - pull_request_comment_test
-      - deploy_key_test
-      - install_deps:
-          context: SLACK_INTEGRATION
-      - env_var_test:
-          context: EXAMPLE_CONTEXT
-      - test_a:
+      - setup
+      - test_jest:
           requires:
-            - install_deps
-      - test_b:
-          requires:
-            - install_deps
-      - hold:
-          type: approval
-          requires:
-            - test_a
-            - test_b
-      - deploy:
-          requires:
-            - hold
-      - notify:
-          context: SLACK_INTEGRATION
-          requires:
-            - deploy
-
-  build-workflow:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - install_deps
-      - test_a:
-          requires:
-            - install_deps
-      - test_b:
-          requires:
-            - install_deps
-      - deploy:
-          requires:
-            - test_a
-            - test_b
-      - deploy-stg:
-          filters:
-            branches:
-              only:
-                - /^stage-.*/
-          requires:
-            - deploy
-      - deploy-prd:
-          filters:
-            branches:
-              only:
-                - main
-          requires:
-            - deploy
+            - setup
