@@ -35,3 +35,5 @@ workflows:
       - test_jest:
           requires:
             - setup
+          environment:
+            TZ: Asia/Tokyo
