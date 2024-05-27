@@ -26,6 +26,8 @@ jobs:
       - run:
           name: Run Jest tests
           command: npx jest --ci --maxWorkers=2
+          environment:
+            TZ: Asia/Tokyo
 
 workflows:
   version: 2
@@ -35,5 +37,3 @@ workflows:
       - test_jest:
           requires:
             - setup
-          environment:
-            TZ: Asia/Tokyo
