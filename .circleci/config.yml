@@ -11,7 +11,7 @@ executors:
           MYSQL_ROOT_PASSWORD: ""
           MYSQL_DATABASE: rails_app_test
         command: mysqld --default-authentication-plugin=mysql_native_password
-        working_directory: ~/repo
+    working_directory: ~/repo
 
 version: 2.1
 jobs:
