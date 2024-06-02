@@ -38,3 +38,4 @@ workflows:
   build_test:
     jobs:
       - setup_test_rspec
+        working_directory: ~/repo/rails_app
