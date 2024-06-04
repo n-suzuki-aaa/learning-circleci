@@ -10,8 +10,8 @@ jobs:
           keys:
             - cache-{{ checksum "package.json" }}
       - run:
-        name: Install dependencies
-        command: npm ci
+          name: Install dependencies
+          command: npm ci
       - run: npm run cy:verify
       - save_cache:
           key: cache-{{ checksum "package.json" }}
@@ -19,8 +19,8 @@ jobs:
             - ~/.npm
             - ~/.cache
       - run:
-        command: npm run start:ci
-        background: true
+          command: npm run start:ci
+          background: true
       - run: npm run e2e:record
 
 workflows:
